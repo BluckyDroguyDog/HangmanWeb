@@ -27,5 +27,12 @@ h2 {
 
 main {
     align-items: center;
+<<<<<<< HEAD
     font-size: 50px;
+=======
+}
+
+title {
+    display: none;
+>>>>>>> 5de80f6e535e9731aae4a872cb4f52f0af449e2a
 }
