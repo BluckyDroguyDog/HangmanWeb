@@ -16,3 +16,7 @@ div {
 main {
     align-items: center;
 }
+
+title {
+    display: none;
+}
