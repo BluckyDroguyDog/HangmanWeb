@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>&#128376; HangMan Web &#128376;</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form method="POST">
+            <label>Lettre:</label>
+            <input type="text" name="lettre" maxlength="1">
+        </form>
+        <p>
+            lettre essayé : 
+            {{range .Deja}}
+            {{.}}
+            {{end}}
+        </p>
+        <div>ta race la pute</div>
+    </body>
+<html>
