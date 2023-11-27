@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>&#128376; HangMan Web &#128376;</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <img src="images/logo.jpg" width="600px" />
+        <div>
+            <h2>New Game</h2>
+            <h2>Show Answer</h2>
+        </div>
+    </header>
+    <main>
+        <div>
+            <p>Il reste _ essais!</p>
+            <img src="images/0.jpg" width="255" />
+            <p>_ _ _ _ _</p>
+        </div>
+        <div>
+            <form method="POST">
+                <label>Lettre:</label>
+                <input type="text" name="lettre" maxlength="1">
+            </form>
+            <p>
+                {{.PageTitle}}
+            </p>
+            <ul>
+                {{range .Todos}}
+                    {{if .Done}}
+                        <li class="done">{{.Title}}</li>
+                    {{else}}
+                        <li>{{.Title}}</li>
+                    {{end}}
+                {{end}}
+            </ul>
+            <div>blabla bla</div>
+        </div>
+    </main>
+    <footer>
+        <address>
+
+        </address>
+    </footer>
+</body>
+
+</html>
