@@ -22,23 +22,23 @@
             <p>_ _ _ _ _</p>
         </div>
         <div>
-            <form method="POST">
-                <label>Lettre:</label>
-                <input type="text" name="lettre" maxlength="1">
-            </form>
             <p>
-                {{.PageTitle}}
-            </p>
-            <ul>
-                {{range .Todos}}
-                    {{if .Done}}
-                        <li class="done">{{.Title}}</li>
-                    {{else}}
-                        <li>{{.Title}}</li>
-                    {{end}}
-                {{end}}
-            </ul>
-            <div>blabla bla</div>
+                To-Do list for user: {{ .User }} 
+              </p>
+              <table>
+                    <tr>
+                    <td>Task</td>
+                    <td>Done</td>
+                  </tr>
+                    {{ with .List }}
+                      {{ range . }}
+                            <tr>
+                                <td>{{ .Name }}</td>
+                                <td>{{ if .Done }}Yes{{ else }}No{{ end }}</td>
+                            </tr>
+                      {{ end }} 
+                    {{ end }}
+              </table>
         </div>
     </main>
     <footer>

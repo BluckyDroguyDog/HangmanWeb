@@ -120,7 +120,7 @@ func startGame(initialWord string, word string) { // fonction qui permet de joue
 	}
 }
 
-func main() {
+func LancerPendu() {
 	word := getRandomWord()                         // stocke le mot aléatoire dans word
 	initialWord := revealLetters(word)              // stocke le mot avec les lettres révélées dans initialWord
 	fmt.Println("Good Luck, you have 10 attempts.") // affiche le nombre d'essais restants
