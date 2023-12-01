@@ -1,153 +1,131 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"io"
+	"html/template"
 	"log"
 	"math/rand"
+	"net/http"
 	"os"
 	"strings"
-	"time"
 )
 
 const wordslistFile = "words.txt"
 
-func randomWord(words []string) string {
-	rand.Seed(time.Now().Unix())
-	return words[rand.Intn(len(words))]
+var deja = []string{}
+var start = true
+var mot string
+var motcacher string
+var tLettre bool
+var vie int = 10
+var endmessage string
+var imagepath = "Image/10.jpg"
+var images = []string{
+	"Image/0.jpg",
+	"Image/1.jpg",
+	"Image/2.jpg",
+	"Image/3.jpg",
+	"Image/4.jpg",
+	"Image/5.jpg",
+	"Image/6.jpg",
+	"Image/7.jpg",
+	"Image/8.jpg",
+	"Image/9.jpg",
+	"Image/10.jpg",
 }
 
-func HangmanWord() string {
-	f, err := os.Open(wordslistFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-	scanner := bufio.NewScanner(f)
-	scannerlist := []string{}
-	for scanner.Scan() {
-		scannerlist = append(scannerlist, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return randomWord(scannerlist)
+type Hangman struct {
+	Deja       []string
+	Mot        string
+	Vie        int
+	Endmessage string
+	Imagepath  string
 }
 
-func HangmanP(attempts int) string {
-	f, err := os.Open("hangman.txt")
-
+func Aleatoire() string {
+	data, err := os.ReadFile("words.txt") // Lecture du fichier "words.txt"
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err) // En cas d'erreur, arrête le programme et affiche l'erreur
 	}
+	s := strings.Split(string(data), "\n") // Séparation des lignes du fichier en un tableau de chaînes de caractères
+	random := rand.Intn(len(s))            // Génération d'un indice aléatoire dans la plage des lignes du fichier
+	return s[random]                       // Retourne le mot aléatoire
+}
 
-	defer f.Close()
-
-	reader := bufio.NewReader(f)
-	buf := make([]byte, 71)
-	hangmanlist := []string{}
-	for {
-		n, err := reader.Read(buf)
-
-		if err != nil {
-
-			if err != io.EOF {
-
-				log.Fatal(err)
-			}
-
-			break
+// revealLetter révèle certaines lettres du mot au début du jeu
+func revealLetter(word string) string {
+	initialWord := "" // Initialise une chaîne de caractères vide pour stocker le mot partiellement révélé
+	for i := 0; i < len(word); i++ {
+		initialWord = initialWord + "_" // Remplit initialWord avec des underscores pour chaque lettre du mot
+	}
+	aLettre := len(word)/2 - 1 // Calcule le nombre de lettres à révéler (moitié du mot - 1)
+	compteur := 1              // Initialise un compteur pour suivre le nombre de lettres révélées
+	for compteur <= aLettre {
+		walid := rand.Intn(len(word)) // Génère un indice aléatoire pour choisir une lettre du mot
+		// Vérifie si l'indice est valide et si la lettre correspondante dans initialWord est encore non révélée
+		if walid >= 0 && walid < len(initialWord) && string(initialWord[walid]) == "_" {
+			compteur++                                                                        // Incrémente le compteur de lettres révélées
+			initialWord = initialWord[:walid] + string(word[walid]) + initialWord[(walid+1):] // Remplace l'underscore par la lettre dans initialWord
 		}
-
-		hangmanlist = append(hangmanlist, string(buf[0:n]))
 	}
-	return hangmanlist[attempts]
+	return initialWord // Retourne le mot partiellement révélé
+}
+func restart() {
+	mot = Aleatoire()
+	motcacher = revealLetter(mot)
+	vie = 10
+	deja = []string{}
+	start = false
 }
 
 func main() {
-	wordToGuess := HangmanWord()
-	guesses := make(map[string]bool)
-	maxAttempts := 10
-	attempts := 0
-
-	for n := len(wordToGuess)/2 - 1; n >= 0; n-- {
-		letter := ReturnLetter(wordToGuess)
-		guesses[letter] = true
+	if start {
+		restart()
 	}
+	fs := http.FileServer(http.Dir("Image"))
+	http.Handle("/Image/", http.StripPrefix("/Image/", fs))
+	tmpl := template.Must(template.ParseFiles("layout.html"))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := Hangman{
+			Deja:       deja,
+			Mot:        motcacher,
+			Vie:        vie,
+			Endmessage: endmessage,
+			Imagepath:  imagepath,
+		}
+		tLettre = false
+		lettre := r.FormValue("lettre")
+		if lettre != "" {
+			deja = append(deja, lettre)
+			for i := 0; i < len(motcacher); i++ { // Parcours du mot initial
+				if mot[i] == []byte(lettre)[0] { // Vérifie si la lettre proposée est présente dans le mot
+					motcacher = motcacher[:i] + string(mot[i]) + motcacher[(i+1):] // Met à jour le mot initial avec la lettre trouvée
+					tLettre = true
+					if mot == motcacher {
+						endmessage = "Vous avez vaincu"
+						data.Endmessage = endmessage
+						restart()
 
-	for {
-		displayWord(wordToGuess, guesses)
-		if isWordGuessed(wordToGuess, guesses) {
-			fmt.Println("Félicitations! Vous avez deviné le mot.")
-			break
-		}
-		if attempts >= maxAttempts {
-			fmt.Println("Vous avez épuisé vos tentatives. Le mot était:", wordToGuess)
-			break
-		}
-		fmt.Print("Devinez une lettre: ")
-		var guess string
-		fmt.Scanln(&guess)
-		guess = strings.ToLower(guess)
-		if _, found := guesses[guess]; found {
-			fmt.Println("Vous avez déjà deviné cette lettre.")
-			continue
-		}
-		if !isLetterInWord(guess, wordToGuess) {
-			fmt.Println("Il vous reste", 9-attempts, "tentatives")
-			attempts++
-		}
-		fmt.Println(HangmanP(attempts))
-		guesses[guess] = true
-	}
+					}
+				}
+			}
+			if tLettre == false {
+				vie--
+				imagepath = images[vie]
+			}
 
-}
-
-func ReturnLetter(word string) string {
-	num := rand.Intn(len(word))
-	word2 := []byte(word)
-	return string(word2[num])
-}
-
-func displayWord(word string, guesses map[string]bool) {
-	for _, letter := range word {
-		if _, found := guesses[string(letter)]; found {
-			letter = rune(ToUpper(string(letter))[0])
-			fmt.Printf("%c ", letter)
-		} else {
-			fmt.Print("_ ")
 		}
-	}
-	fmt.Println()
-}
-
-func ToUpper(s string) string {
-	h := []rune(s)
-	result := ""
-	for i := 0; i <= len(h)-1; i++ {
-		if (h[i] >= 'a') && (h[i] <= 'z') {
-			h[i] = h[i] - 32
+		if vie == 0 {
+			endmessage = "Vous avez péri(e)"
+			data.Endmessage = endmessage
+			restart()
 		}
-		result += string(h[i])
-	}
-	return result
-}
 
-func isWordGuessed(word string, guesses map[string]bool) bool {
-	for _, letter := range word {
-		if _, found := guesses[string(letter)]; !found {
-			return false
-		}
-	}
-	return true
-}
-
-func isLetterInWord(letter string, word string) bool {
-	for _, l := range word {
-		if string(l) == letter {
-			return true
-		}
-	}
-	return false
+		imagepath = images[vie]
+		data.Imagepath = imagepath
+		data.Deja = deja
+		data.Mot = motcacher
+		data.Vie = vie
+		tmpl.Execute(w, data)
+	})
+	http.ListenAndServe(":80", nil)
 }

@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>&#128376; HangMan Web &#128376;</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./css/style.css" >
+    </head>
+    <body>
+        <form method="POST">
+            <label>Lettre:</label>
+            <input type="text" name="lettre" maxlength="1">
+        </form>
+        <p>
+            lettre essayé : 
+            {{range .Deja}}
+            {{.}}
+            {{end}}
+        </p>
+        <div>Le mot à trouver est {{.Mot}}</div>
+        <div>Nombre de vie {{.Vie}}</div>
+        <div class="HangMan">
+            <img src={{.Imagepath}} alt="Hangman Image" style="width:500px; height: 500px;">
+        </div> 
+        <div>{{.Endmessage}}</div>
+    </body>
+<html>
