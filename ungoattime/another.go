@@ -1,4 +1,4 @@
-package main
+package 
 
 import (
 	"fmt"
@@ -20,12 +20,12 @@ func renderTemplate(w http.ResponseWriter, tmpl string) {
 	t.Execute(w, nil)
 }
 
-func main() {
+func principal() {
 	http.HandleFunc("/", Home)
 
 	fmt.Println("(https://localhost:8080) - Server started on port", port)
 	http.ListenAndServe(":8080", nil)
 
-	game := objects.HangmanGame{}
-	game.LancerPendu()
+game := objects.HangmanGame{}
+game.LancerPendu()
 }
