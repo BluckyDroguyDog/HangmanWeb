@@ -8,11 +8,12 @@
     </head>
     <body>
         <header>
-            <div>
-                <input type="button" value="New Game">
-                <img src="images/logo.jpg" width="600px"/>
-                <input type="button" value="Show Answer">
-            </div>
+            <section class="row">
+                <a type="button" href="HangmanWeb.html" class="Bulle">New Game</a>
+                <a type="button"> <img src="images/logo.jpg" alt="HangManLogo" height="150" width="500" class="BulleLogo" />
+                </a>
+                <a type="button" class="BulleNav">Show Answer</a>
+            </section>
             <div>
                 <input type="button" value="Boss">
                 <input type="button" value="Personnage">
@@ -43,58 +44,5 @@
             <div>{{.Endmessage}}</div>
         </main>
     </body>
-=======
 
-<head>
-    <title>HangMan Web</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <section class="row">
-            <a type="button" href="HangmanWeb.html" class="Bulle">New Game</a>
-            <a type="button"> <img src="images/logo.jpg" alt="HangManLogo" height="150" width="500" class="BulleLogo" />
-            </a>
-            <a type="button" class="BulleNav">Show Answer</a>
-        </section>
-    </header>
-    <main>
-        <p class="BulleBack"> . </p>
-        <div class="'liste">
-            <p id="'listes">Boss</p>
-            <p id="'listes">Personnage</p>
-            <p id="'listes">Objet</p>
-            <p id="'listes">Lieux</p>
-        </div>
-        <select name="Difficulté">
-            <option>Facile</option>
-            <option>Normal</option>
-            <option>Difficile</option>
-        </select>
-        <form method="POST">
-            <label>Lettre:</label>
-            <input type="text" name="lettre" maxlength="1">
-        </form>
-        <p>
-            lettre essayé :
-            {{range .Deja}}
-            {{.}}
-            {{end}}
-        </p>
-        <div>Le mot à trouver est {{.Mot}}</div>
-        <div class="HangMan">
-            <img src={{.Imagepath}} alt="Hangman Image" width="800px">
-        </div>
-        <div>{{.Endmessage}}</div>
-    </main>
-    <footer>
-        <address>
-
-        </address>
-    </footer>
-</body>
-
->>>>>>> Stashed changes
 </html>

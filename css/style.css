@@ -60,7 +60,6 @@ div {
 }
 
 main {
-<<<<<<< Updated upstream
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
@@ -72,20 +71,10 @@ main {
     justify-content: space-around;
 }
 
-.animationall {
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
-=======
-    font-size: 50px;
-}
-
 .row {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
->>>>>>> Stashed changes
 }
 
 .liste {
