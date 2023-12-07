@@ -18,19 +18,19 @@ var motcacher string
 var tLettre bool
 var vie int = 10
 var endmessage string
-var imagepath = "images/10.jpg"
+var imagepath = "images/vie10.png"
 var images = []string{
-	"images/0.jpg",
-	"images/1.jpg",
-	"images/2.jpg",
-	"images/3.jpg",
-	"images/4.jpg",
-	"images/5.jpg",
-	"images/6.jpg",
-	"images/7.jpg",
-	"images/8.jpg",
-	"images/9.jpg",
-	"images/10.jpg",
+	"images/vie0.png",
+	"images/vie1.png",
+	"images/vie2.png",
+	"images/vie3.png",
+	"images/vie4.png",
+	"images/vie5.png",
+	"images/vie6.png",
+	"images/vie7.png",
+	"images/vie8.png",
+	"images/vie9.png",
+	"images/vie10.png",
 }
 
 type Hangman struct {

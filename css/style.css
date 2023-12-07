@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-title {
+title, style {
     display: none;
 }
 
