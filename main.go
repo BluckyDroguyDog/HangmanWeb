@@ -18,19 +18,19 @@ var motcacher string
 var tLettre bool
 var vie int = 10
 var endmessage string
-var imagepath = "Image/10.jpg"
+var imagepath = "images/10.jpg"
 var images = []string{
-	"Image/0.jpg",
-	"Image/1.jpg",
-	"Image/2.jpg",
-	"Image/3.jpg",
-	"Image/4.jpg",
-	"Image/5.jpg",
-	"Image/6.jpg",
-	"Image/7.jpg",
-	"Image/8.jpg",
-	"Image/9.jpg",
-	"Image/10.jpg",
+	"images/0.jpg",
+	"images/1.jpg",
+	"images/2.jpg",
+	"images/3.jpg",
+	"images/4.jpg",
+	"images/5.jpg",
+	"images/6.jpg",
+	"images/7.jpg",
+	"images/8.jpg",
+	"images/9.jpg",
+	"images/10.jpg",
 }
 
 type Hangman struct {
@@ -81,8 +81,10 @@ func main() {
 	if start {
 		restart()
 	}
-	fs := http.FileServer(http.Dir("Image"))
-	http.Handle("/Image/", http.StripPrefix("/Image/", fs))
+	fs := http.FileServer(http.Dir("images"))
+	http.Handle("/images/", http.StripPrefix("/images/", fs))
+	fsCss := http.FileServer(http.Dir("./css"))
+	http.Handle("/css/", http.StripPrefix("/css/", fsCss))
 	tmpl := template.Must(template.ParseFiles("layout.html"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := Hangman{
