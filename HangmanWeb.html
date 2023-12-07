@@ -1,48 +1,44 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-<title>HangMan Web</title>
-<meta charset="utf-8">
-<link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <img src="images/logo.jpg" width="600px"/>
-        <div>
-            <a href="HangmanHome.html">Home</a>
-            <a href="HangmanWeb.html">New Game</a>
-            <h2>Show Answer</h2>
-        </div>
-    </header>
-    <main>
-        <select name="Difficulté">
-            <option>Facile</option>
-            <option>Normal</option>
-            <option>Difficile</option>
-        </select>
-        <form method="POST">
-            <label>Lettre:</label>
-            <input type="text" name="lettre" maxlength="1">
-        </form>
-        <p>
-            lettre essayé : 
-            {{range .Deja}}
-            {{.}}
-            {{end}}
-        </p>
-        <div>Le mot à trouver est {{.Mot}}</div>
-        <div class="HangMan">
-            <img src={{.Imagepath}} alt="Hangman Image" width="800px">
-        </div> 
-        <div>{{.Endmessage}}</div>
-    </main>
-    <footer>
-        <address>
-            
-        </address>
-    </footer>
-</body>
-
+    <head>
+        <title>HangMan Web</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <div>
+                <input type="button" value="New Game">
+                <img src="images/logo.jpg" width="600px"/>
+                <input type="button" value="Show Answer">
+            </div>
+            <div>
+                <input type="button" value="Boss">
+                <input type="button" value="Personnage">
+                <input type="button" value="Lieu">
+                <input type="button" value="Objet">
+            </div>
+        </header>
+        <main>
+            <section>
+                <p>
+                    lettre essayé : 
+                    {{range .Deja}}
+                    {{.}}
+                    {{end}}
+                </p>
+                <form method="POST">
+                    <label>Lettre:</label>
+                    <input type="text" value="lettre" maxlength="1">
+                </form>
+                <div>Le mot à trouver est {{.Mot}}</div>
+            </section>
+            <section>
+                <div class="HangMan">
+                    <img src={{.Imagepath}} alt="Hangman Image" width="800px">
+                </div> 
+            </section>
+            <div>{{.Endmessage}}</div>
+        </main>
+    </body>
 </html>
