@@ -85,7 +85,7 @@ func main() {
 	http.Handle("/images/", http.StripPrefix("/images/", fs))
 	fsCss := http.FileServer(http.Dir("./css"))
 	http.Handle("/css/", http.StripPrefix("/css/", fsCss))
-	tmpl := template.Must(template.ParseFiles("layout.html"))
+	tmpl := template.Must(template.ParseFiles("HangmanWeb.html"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := Hangman{
 			Deja:       deja,
