@@ -2,23 +2,41 @@
 <html>
 
 <head>
-<title>&#128376; HangMan Web &#128376;</title>
+<title>HangMan Web</title>
 <meta charset="utf-8">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <img src="images/logo.jpg" width="600px"/>
         <div>
-            <h2>New Game</h2>
+            <a href="HangmanHome.html">Home</a>
+            <a href="HangmanWeb.html">New Game</a>
             <h2>Show Answer</h2>
         </div>
     </header>
     <main>
-        <p>Il reste _ essais!</p>
-        <img src="images/0.jpg" width="255"/>
-        <p>_ _ _ _ _</p>
+        <select name="Difficulté">
+            <option>Facile</option>
+            <option>Normal</option>
+            <option>Difficile</option>
+        </select>
+        <form method="POST">
+            <label>Lettre:</label>
+            <input type="text" name="lettre" maxlength="1">
+        </form>
+        <p>
+            lettre essayé : 
+            {{range .Deja}}
+            {{.}}
+            {{end}}
+        </p>
+        <div>Le mot à trouver est {{.Mot}}</div>
+        <div class="HangMan">
+            <img src={{.Imagepath}} alt="Hangman Image" width="800px">
+        </div> 
+        <div>{{.Endmessage}}</div>
     </main>
     <footer>
         <address>

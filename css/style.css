@@ -25,15 +25,14 @@ h2 {
     font-weight: lighter;
 }
 
+a {
+    text-decoration: none;
+}
+
 main {
     align-items: center;
     font-size: 50px;
 }
-
-title {
-    display: none;
-}
-
 
 .animationall {
     @keyframes fadeIn {
