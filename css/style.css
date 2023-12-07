@@ -31,7 +31,14 @@ a {
 
 main {
     align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
     font-size: 50px;
+}
+
+#column {
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .animationall {

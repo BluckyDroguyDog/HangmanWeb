@@ -20,7 +20,7 @@
             </div>
         </header>
         <main>
-            <section>
+            <section id="column">
                 <p>
                     lettre essayé : 
                     {{range .Deja}}
@@ -34,7 +34,7 @@
                 <div>Le mot à trouver est {{.Mot}}</div>
             </section>
             <section>
-                <div class="HangMan">
+                <div class="HangMan" id="column">
                     <img src={{.Imagepath}} alt="Hangman Image" width="800px">
                     <img src="images/link.gif">
                 </div> 
