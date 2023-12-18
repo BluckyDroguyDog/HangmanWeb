@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< Updated upstream
     <head>
         <title>HangMan Web</title>
         <meta charset="utf-8">
@@ -9,17 +8,17 @@
     <body>
         <header>
             <section class="row">
-                <a type="button" href="HangmanWeb.html" class="Bulle">New Game</a>
-                <a type="button"> <img src="images/logo.jpg" alt="HangManLogo" height="150" width="500" class="BulleLogo" />
+                <a type="button" href="HangmanWeb.html" id="bouton">Nouveau</a>
+                <a type="button"> <img src="images/logo.png" alt="HangManLogo" height="300px"/>
                 </a>
-                <a type="button" class="BulleNav">Show Answer</a>
+                <a type="button" id="bouton">Réponse</a>
             </section>
-            <div>
-                <input type="button" value="Boss">
-                <input type="button" value="Personnage">
-                <input type="button" value="Lieu">
-                <input type="button" value="Objet">
-            </div>
+            <form method="post" class="row">
+                <input type="submit" name="liste" value="Boss" id="bouton">
+                <input type="submit" name="liste" value="Personnage" id="bouton">
+                <input type="submit" name="liste" value="Lieu" id="bouton">
+                <input type="submit" name="liste" value="Objet" id="bouton">
+            </form>
         </header>
         <main>
             <section id="column">
@@ -31,9 +30,10 @@
                 </p>
                 <form method="POST">
                     <label>Lettre:</label>
-                    <input type="text" value="lettre" maxlength="1">
+                    <input type="text" name="lettre" maxlength="1">
                 </form>
                 <div>Le mot à trouver est {{.Mot}}</div>
+                <div>{{.Endmessage}}</div>
             </section>
             <section>
                 <div class="HangMan" id="column">
@@ -41,7 +41,6 @@
                     <img src="images/link.gif" width="750px" height="400px">
                 </div> 
             </section>
-            <div>{{.Endmessage}}</div>
         </main>
     </body>
 
