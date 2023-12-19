@@ -1,0 +1,154 @@
+Arc
+Baguette Magique
+Bombe
+Boomerang
+boomerang Magique
+Bougie Bleue
+Bougie Rouge
+Eau de Vie Bleue
+Eau de Vie Rouge
+Echelle
+Fleche
+Livre Magique
+Radeau
+Sifflet
+Viande
+Anneau Bleu
+Anneau Rouge
+Bouclier de Bois
+Bouclier Magique
+Bracelet Magique
+Epee de Bois
+Epee Blanche
+Epee Magique
+Compas
+Carte du Donjon
+Petite Cle
+Cle Magique
+Fee
+Horloge Magique
+Receptacle de Coeur
+Coeur
+Bottes
+Bougie
+Croix
+Flûte
+Gant Pratique
+Marteau
+Conteneur de Magie
+Fiole de Magie
+Fragment de Coeur
+Poupee
+Sac aux Tresors
+Canne a Peche
+Lance-Pierre
+Lanterne
+Boomerang Tornade
+Bottes de Fer
+Arc du Heros
+Hydro Bombe
+Bombinsecte
+Grappin
+Aerouage
+Baton Anima
+Boulet
+Lien de l'Amitie
+Baba
+Epee de Bois
+Epee de Toal
+Excalibur
+Bouclier de Toal
+Bouclier en Bois
+Bouclier d'Hylia
+Tenue du Heros
+Tenue Zora
+Armure Magique
+Bourse
+Carquois
+Sac de Bombes
+Flacon
+Potion Rouge
+Potion Bleue
+Larmes de Fee
+Gelee
+Gelee Inouïe
+Huile a Lanterne
+Lait
+Soupe Infecte
+Eau
+Soupe Simple
+Soupe Ordinaire
+Soupe Fine
+Eau Thermale
+Larve
+Lombric
+Cristal d'Ombre
+Perle de Lumiere
+Calice de Lumiere
+Miroir des Ombres
+Pelle
+Missile Teigneux
+Potion jaune
+Potion violette
+Ardoise des Tornade
+Canon
+Grue de Recuperation
+Leurre au gros
+Epee de Siwan
+Epee Spectrale
+Cle Solaire
+Cle Spectrale
+Collier Royal
+Cle Royale
+Goutte de Sagesse
+Goutte de Force
+Goutte de Courage
+Sablier Fantôme
+Longue-vue
+Habits Neufs Que Seuls Les Honnetes Hommes Peuvent Voir
+Scarabee
+Fouet
+Lyre
+Filets
+Jarre Magique
+Parachâle
+Boucles Ignifuges
+ecaille du Dragon d'Eau
+Bouclier en Fer
+Bouclier Sacre
+Gants de Feu
+Souffle-Vent
+Grappince
+Baguette d'Eau
+Appareil Photo
+Tablette Sheikah
+Embleme du triomphe
+Paravoile
+Noix Korogu
+Maracas de Noïa
+Noix de Noïa
+Priere de Mipha
+Rage de Revali
+Colere d'Urbosa
+Bouclier de Daruk
+Destrier de legende 0.1
+Fleche de Feu
+Fleche Explosive
+Fleche de Glace
+Fleche electrique
+Fleche Archeonique
+Lance
+Epee
+Baguette de Feu
+Ocarina
+Baguette des vents
+Tunique Verte
+Tunique Bleu
+Tunique Rouge
+Bouclier Miroir
+Epee de Legende
+Poudre Magique
+Arc de Lumiere
+Triforce
+Rubis
+Masque de Majora

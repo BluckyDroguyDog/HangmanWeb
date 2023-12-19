@@ -9,13 +9,11 @@ import (
 	"strings"
 )
 
-const wordslistFile = "words.txt"
-
+var listedemot = "Boss"
 var deja = []string{}
 var start = true
 var mot string
 var motcacher string
-var tLettre bool
 var vie int = 10
 var endmessage string
 var imagepath = "images/vie10.png"
@@ -41,8 +39,8 @@ type Hangman struct {
 	Imagepath  string
 }
 
-func Aleatoire() string {
-	data, err := os.ReadFile("words.txt") // Lecture du fichier "words.txt"
+func Aleatoire(liste string) string {
+	data, err := os.ReadFile(liste + ".txt") // Lecture du fichier "words.txt"
 	if err != nil {
 		log.Fatal(err) // En cas d'erreur, arrête le programme et affiche l'erreur
 	}
@@ -70,17 +68,20 @@ func revealLetter(word string) string {
 	return initialWord // Retourne le mot partiellement révélé
 }
 func restart() {
-	mot = Aleatoire()
+	mot = Aleatoire(listedemot)
 	motcacher = revealLetter(mot)
 	vie = 10
 	deja = []string{}
+	endmessage = ""
 	start = false
 }
 
 func main() {
+
 	if start {
 		restart()
 	}
+	print(mot + "/")
 	fs := http.FileServer(http.Dir("images"))
 	http.Handle("/images/", http.StripPrefix("/images/", fs))
 	fsCss := http.FileServer(http.Dir("./css"))
@@ -94,7 +95,15 @@ func main() {
 			Endmessage: endmessage,
 			Imagepath:  imagepath,
 		}
-		tLettre = false
+		liste := r.FormValue("liste")
+		if liste != "" {
+			listedemot = liste
+		}
+		nouvellepartie := r.FormValue("game")
+		if nouvellepartie == "Nouveau" {
+			restart()
+		}
+		tLettre := false
 		lettre := r.FormValue("lettre")
 		if lettre != "" {
 			deja = append(deja, lettre)
@@ -105,8 +114,6 @@ func main() {
 					if mot == motcacher {
 						endmessage = "Vous avez vaincu"
 						data.Endmessage = endmessage
-						restart()
-
 					}
 				}
 			}
@@ -119,7 +126,6 @@ func main() {
 		if vie == 0 {
 			endmessage = "Vous avez péri(e)"
 			data.Endmessage = endmessage
-			restart()
 		}
 
 		imagepath = images[vie]
@@ -128,6 +134,7 @@ func main() {
 		data.Mot = motcacher
 		data.Vie = vie
 		tmpl.Execute(w, data)
+		print(mot + "bou")
 	})
 	http.ListenAndServe(":80", nil)
 }
