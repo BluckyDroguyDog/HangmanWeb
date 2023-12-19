@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    color: #fffdec;
+    color: #fffaf3;
     text-decoration: none;
     font-family: 'The Wild Breath of Zelda';
     text-align: center;
@@ -53,7 +53,7 @@ main {
     margin-top: 50px;
 }
 
-#bouton {
+#bouton, input {
     background-color: transparent;
     background-image: url(../images/bouton.png);
     background-size: contain;
@@ -63,6 +63,8 @@ main {
     height: 100px;
     text-align: center;
     font-size: 50px;
+    border: none;
+    align-items: center;
 }
 
 #listes {
@@ -73,9 +75,4 @@ main {
     border-radius: 40px;
     background-color: blue;
     padding: 10px;
-}
-
-input {
-    text-align: center;
-    border: none;
 }
