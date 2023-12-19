@@ -4,6 +4,8 @@
     justify-content: space-around;
     color: #fffdec;
     text-decoration: none;
+    font-family: 'The Wild Breath of Zelda';
+    text-align: center;
 }
 
 body {
@@ -71,4 +73,9 @@ main {
     border-radius: 40px;
     background-color: blue;
     padding: 10px;
+}
+
+input {
+    text-align: center;
+    border: none;
 }

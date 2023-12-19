@@ -13,7 +13,7 @@
                 </form>
                 <a type="button"> <img src="images/logo.png" alt="HangManLogo" height="300px"/>
                 </a>
-                <a type="button" id="bouton">Réponse</a>
+                <a type="button" id="bouton">Reponse</a>
             </section>
             <form method="post" class="row">
                 <input type="submit" name="liste" value="Boss" id="bouton">
@@ -24,17 +24,18 @@
         </header>
         <main>
             <section id="column">
-                <p>
-                    lettre essayé : 
+                <div>Lettre essayee :</div>
+                <div>    
                     {{range .Deja}}
                     {{.}}
                     {{end}}
-                </p>
+                </div>
                 <form method="POST">
-                    <label>Lettre:</label>
+                    <label>Lettre :</label>
                     <input type="text" name="lettre" maxlength="1">
                 </form>
-                <div>Le mot à trouver est {{.Mot}}</div>
+                <div>Le mot a trouver est :</div>
+                <div>{{.Mot}}</div>
                 <div>{{.Endmessage}}</div>
             </section>
             <section>
