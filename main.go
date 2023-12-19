@@ -30,22 +30,13 @@ var images = []string{
 	"images/vie9.png",
 	"images/vie10.png",
 }
-var imagecombat = "images/combat.gif"
-var gifs = []string{
-	"images/combat.gif",
-	"images/combatv.gif",
-	"images/combatg.gif",
-	"images/combatd.gif",
-	"images/combatp.gif",
-}
 
-type Hangman struct {
+type Hangman struct { // structure contenant les information a envoye au template
 	Deja       []string
 	Mot        string
 	Vie        int
 	Endmessage string
 	Imagepath  string
-	Imagegif   string
 }
 
 func Aleatoire(liste string) string {
@@ -55,7 +46,7 @@ func Aleatoire(liste string) string {
 	}
 	s := strings.Split(string(data), "\n") // Séparation des lignes du fichier en un tableau de chaînes de caractères
 	random := rand.Intn(len(s))            // Génération d'un indice aléatoire dans la plage des lignes du fichier
-	return s[random]                       // Retourne le mot aléatoire
+	return ToUpper(s[random])              // Retourne le mot aléatoire
 }
 
 // revealLetter révèle certaines lettres du mot au début du jeu
@@ -78,12 +69,24 @@ func revealLetter(word string) string {
 }
 func restart() {
 	mot = Aleatoire(listedemot)
+	print(mot) // les test iront plus vite
 	motcacher = revealLetter(mot)
 	vie = 10
 	deja = []string{}
 	endmessage = ""
-	imagecombat = gifs[0]
 	start = false
+}
+
+func ToUpper(s string) string {
+	h := []rune(s)
+	result := ""
+	for i := 0; i <= len(h)-1; i++ {
+		if (h[i] >= 'a') && (h[i] <= 'z') {
+			h[i] = h[i] - 32
+		}
+		result += string(h[i])
+	}
+	return result
 }
 
 func main() {
@@ -91,12 +94,11 @@ func main() {
 	if start {
 		restart()
 	}
-	print(mot + "/")
-	fs := http.FileServer(http.Dir("images"))
+	fs := http.FileServer(http.Dir("images")) // recuperation du dossier images et son contenu
 	http.Handle("/images/", http.StripPrefix("/images/", fs))
-	fsCss := http.FileServer(http.Dir("./css"))
+	fsCss := http.FileServer(http.Dir("./css")) // recuperation du  dossier css et son contenu
 	http.Handle("/css/", http.StripPrefix("/css/", fsCss))
-	tmpl := template.Must(template.ParseFiles("HangmanWeb.html"))
+	tmpl := template.Must(template.ParseFiles("HangmanWeb.html")) // recuperation du template
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := Hangman{
 			Deja:       deja,
@@ -104,55 +106,46 @@ func main() {
 			Vie:        vie,
 			Endmessage: endmessage,
 			Imagepath:  imagepath,
-			Imagegif:   imagecombat,
 		}
-		liste := r.FormValue("liste")
+		liste := r.FormValue("liste") // choix de la liste de mots
 		if liste != "" {
 			listedemot = liste
 		}
-		nouvellepartie := r.FormValue("game")
+		nouvellepartie := r.FormValue("game") // reset
 		if nouvellepartie == "Nouveau" {
 			restart()
 		}
-		tLettre := false
-		lettre := r.FormValue("lettre")
+		tLettre := false                         // Tlettre = True Lettre pour verifier si la lettre est dans le mot
+		lettre := ToUpper(r.FormValue("lettre")) //Input de la lettre mis en maj
 		if lettre != "" {
 			deja = append(deja, lettre)
 			for i := 0; i < len(motcacher); i++ { // Parcours du mot initial
 				if mot[i] == []byte(lettre)[0] { // Vérifie si la lettre proposée est présente dans le mot
 					motcacher = motcacher[:i] + string(mot[i]) + motcacher[(i+1):] // Met à jour le mot initial avec la lettre trouvée
 					tLettre = true
-					imagecombat = gifs[1]
 					if mot == motcacher {
 						endmessage = "Vous avez vaincu"
 						data.Endmessage = endmessage
-						imagecombat = gifs[2]
-						data.Imagegif = imagecombat
 					}
 				}
 			}
-			if tLettre == false {
+			if tLettre == false { //perte de vie et changement d'images
 				vie--
 				imagepath = images[vie]
-				imagecombat = gifs[3]
 			}
 
 		}
-		if vie == 0 {
+		if vie == 0 { // arret de la partie
 			endmessage = "Vous avez péri(e)"
 			data.Endmessage = endmessage
-			imagecombat = gifs[4]
-			data.Imagegif = imagecombat
 		}
 
-		imagepath = images[vie]
+		imagepath = images[vie] //Mise a jour des information de la struture
 		data.Imagepath = imagepath
-		data.Imagegif = imagecombat
 		data.Deja = deja
 		data.Mot = motcacher
 		data.Vie = vie
-		tmpl.Execute(w, data)
-		print(mot + "bou")
+		tmpl.Execute(w, data) // execution des nouvelles information sur le template
 	})
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":80", nil) // diffusion sur le localhost
 }
