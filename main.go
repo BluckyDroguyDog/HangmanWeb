@@ -15,7 +15,9 @@ var start = true
 var mot string
 var motcacher string
 var vie int = 10
+var fini = false
 var endmessage string
+var reponse string
 var imagepath = "images/vie10.png"
 var images = []string{
 	"images/vie0.png",
@@ -44,6 +46,7 @@ type Hangman struct { // structure contenant les information a envoye au templat
 	Mot        string
 	Vie        int
 	Endmessage string
+	Reponse    string
 	Imagepath  string
 	Imagegif   string
 }
@@ -84,8 +87,10 @@ func restart() {
 	vie = 10
 	deja = []string{}
 	endmessage = ""
+	reponse = ""
 	imagegif = gifs[0]
 	start = false
+	fini = false
 }
 
 func ToUpper(s string) string {
@@ -125,6 +130,7 @@ func main() {
 			Mot:        motcacher,
 			Vie:        vie,
 			Endmessage: endmessage,
+			Reponse:    reponse,
 			Imagepath:  imagepath,
 			Imagegif:   imagegif,
 		}
@@ -136,41 +142,55 @@ func main() {
 		if nouvellepartie == "Nouveau" {
 			restart()
 		}
-		tLettre := false                         // Tlettre = True Lettre pour verifier si la lettre est dans le mot
-		lettre := ToUpper(r.FormValue("lettre")) //Input de la lettre mis en maj
-		if lettre != "" && PasUtilise(lettre) {  //Vérifie si une lettre est envoyée et si elle n'a pas déjà été utilisée
-			deja = append(deja, lettre)
-			for i := 0; i < len(motcacher); i++ { // Parcours du mot initial
-				if mot[i] == []byte(lettre)[0] { // Vérifie si la lettre proposée est présente dans le mot
-					motcacher = motcacher[:i] + string(mot[i]) + motcacher[(i+1):] // Met à jour le mot initial avec la lettre trouvée
-					tLettre = true
-					imagegif = gifs[1]
-					if mot == motcacher {
-						endmessage = "Vous avez vaincu"
-						data.Endmessage = endmessage
-						imagegif = gifs[2]
-						data.Imagegif = imagegif
-					}
-				}
-			}
-			if tLettre == false { //perte de vie et changement d'images
-				vie--
-				imagepath = images[vie]
-				imagegif = gifs[3]
-			}
-
-		}
-		if vie == 0 { // arret de la partie
-			endmessage = "Vous avez péri(e)"
-			data.Endmessage = endmessage
+		montrereponse := r.FormValue("answer") // montre la réponse
+		if montrereponse == "Reponse" {
+			reponse = "La reponse etait : " + mot
+			data.Reponse = reponse
 			imagegif = gifs[4]
 			data.Imagegif = imagegif
+		}
+		tLettre := false   // Tlettre = True Lettre pour verifier si la lettre est dans le mot
+		if fini == false { // Vérifie si la partie n'est pas déjà terminée
+			lettre := ToUpper(r.FormValue("lettre")) //Input de la lettre mis en maj
+			if lettre != "" && PasUtilise(lettre) {  //Vérifie si une lettre est envoyée et si elle n'a pas déjà été utilisée
+				deja = append(deja, lettre)
+				for i := 0; i < len(motcacher); i++ { // Parcours du mot initial
+					if mot[i] == []byte(lettre)[0] { // Vérifie si la lettre proposée est présente dans le mot
+						motcacher = motcacher[:i] + string(mot[i]) + motcacher[(i+1):] // Met à jour le mot initial avec la lettre trouvée
+						tLettre = true
+						imagegif = gifs[1]
+						if mot == motcacher {
+							endmessage = "Vous avez vaincu"
+							data.Endmessage = endmessage
+							imagegif = gifs[2]
+							data.Imagegif = imagegif
+							fini = true
+						}
+					}
+				}
+				if tLettre == false { //perte de vie et changement d'images
+					vie--
+					imagepath = images[vie]
+					imagegif = gifs[3]
+				}
+
+			}
+			if vie == 0 { // arret de la partie
+				endmessage = "Vous avez peri(e)"
+				data.Endmessage = endmessage
+				reponse = "La reponse etait : " + mot
+				data.Reponse = reponse
+				imagegif = gifs[4]
+				data.Imagegif = imagegif
+				fini = true
+			}
 		}
 
 		imagepath = images[vie] //Mise a jour des information de la struture
 		data.Imagepath = imagepath
 		data.Imagegif = imagegif
 		data.Endmessage = endmessage
+		data.Reponse = reponse
 		data.Deja = deja
 		data.Mot = motcacher
 		data.Vie = vie

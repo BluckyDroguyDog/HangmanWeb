@@ -13,7 +13,9 @@
                 </form>
                 <a type="button"> <img src="images/logo.png" alt="HangManLogo" height="300px"/>
                 </a>
-                <a type="button" id="bouton">Reponse</a>
+                <form method="post">
+                    <input type="submit" name="answer" value="Reponse" id="bouton">
+                </form>
             </section>
             <form method="post" class="row">
                 <input type="submit" name="liste" value="Boss" id="bouton">
@@ -37,6 +39,7 @@
                 <div>Le mot a trouver est :</div>
                 <div>{{.Mot}}</div>
                 <div>{{.Endmessage}}</div>
+                <div>{{.Reponse}}</div>
             </section>
             <section>
                 <div class="HangMan" id="column">
